@@ -78,8 +78,8 @@ jobs:
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       run: |
-        docker-compose build
-        docker-compose up -d
+        docker compose build
+        docker compose up -d
         sleep 30
         curl -f http://localhost:8080/health || exit 1
-        docker-compose down 
+        docker compose down 
