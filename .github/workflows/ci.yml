@@ -80,6 +80,16 @@ jobs:
       run: |
         docker compose build
         docker compose up -d
-        sleep 30
+        echo "Waiting for Airflow to start..."
+        sleep 60
+        echo "Checking Airflow health..."
+        for i in {1..10}; do
+          if curl -f http://localhost:8080/health > /dev/null 2>&1; then
+            echo "Airflow is healthy!"
+            break
+          fi
+          echo "Attempt $i: Airflow not ready yet, waiting..."
+          sleep 10
+        done
         curl -f http://localhost:8080/health || exit 1
         docker compose down 
