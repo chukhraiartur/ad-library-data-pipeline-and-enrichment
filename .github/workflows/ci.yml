@@ -78,6 +78,9 @@ jobs:
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       run: |
+        echo "Creating data directories with proper permissions..."
+        mkdir -p data/bronze data/silver data/gold
+        chmod -R 777 data
         docker compose build
         docker compose up -d
         echo "Waiting for Airflow to start..."
@@ -86,9 +89,6 @@ jobs:
         docker compose ps
         echo "Airflow logs:"
         docker compose logs airflow --tail=20
-        echo "Creating data directories with proper permissions..."
-        docker compose exec -T airflow mkdir -p /opt/airflow/data/bronze /opt/airflow/data/silver /opt/airflow/data/gold
-        docker compose exec -T airflow chmod -R 777 /opt/airflow/data
 
         echo "Running the pipeline..."
         docker compose exec -T airflow python /opt/airflow/run_local_pipeline.py --mode mock --log-file ""
