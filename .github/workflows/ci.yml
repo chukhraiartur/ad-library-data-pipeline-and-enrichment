@@ -86,25 +86,20 @@ jobs:
         docker compose ps
         echo "Airflow logs:"
         docker compose logs airflow --tail=20
-        echo "Checking Airflow health..."
+        echo "Running the pipeline..."
+        docker compose exec -T airflow python /opt/airflow/scripts/run_pipeline.py
+        echo "Pipeline completed. Checking results..."
+        echo "Waiting for top 10 ads file to be generated..."
         for i in {1..10}; do
-          if curl -f http://host.docker.internal:8080/health > /dev/null 2>&1; then
-            echo "Airflow is healthy!"
+          if docker compose exec -T airflow ls /opt/airflow/data/gold/top10_ads_*.csv > /dev/null 2>&1; then
+            echo "Top 10 ads file found on attempt $i"
             break
           fi
-          echo "Attempt $i: Airflow not ready yet, waiting..."
+          echo "Attempt $i: Top 10 ads file not ready yet, waiting..."
           sleep 10
         done
-        echo "Final health check..."
-        # Try multiple approaches to check Airflow health
-        if curl -f http://host.docker.internal:8080/health > /dev/null 2>&1; then
-          echo "Airflow health check passed via host.docker.internal"
-        elif curl -f http://127.0.0.1:8080/health > /dev/null 2>&1; then
-          echo "Airflow health check passed via 127.0.0.1"
-        elif curl -f http://localhost:8080/health > /dev/null 2>&1; then
-          echo "Airflow health check passed via localhost"
-        else
-          echo "All health check attempts failed"
-          exit 1
-        fi
+        echo "Top 10 ads file content:"
+        docker compose exec -T airflow cat /opt/airflow/data/gold/top10_ads_*.csv || echo "No top10 file found"
+        echo "Pipeline logs:"
+        docker compose logs airflow --tail=50
         docker compose down 
