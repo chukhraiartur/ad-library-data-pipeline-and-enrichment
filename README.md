@@ -81,6 +81,8 @@ ad-library-data-pipeline-and-enrichment/
 │   ├── extract/           # Data extraction (Bronze layer)
 │   │   ├── fetch_ads.py   # Main extraction orchestrator
 │   │   └── modes/         # Extraction modes (mock/api)
+│   │       ├── mock_mode.py
+│   │       └── api_mode.py
 │   ├── normalize/         # Data normalization (Silver layer)
 │   │   └── normalize_ads.py
 │   ├── enrich/           # Data enrichment (Gold layer)
@@ -95,9 +97,34 @@ ad-library-data-pipeline-and-enrichment/
 │       ├── ranker.py     # Ranking algorithms
 │       └── json_encoder.py
 ├── dags/                 # Airflow DAG definitions
+│   └── pipeline_dag.py
 ├── data/                 # Data storage (Bronze/Silver/Gold)
+│   ├── bronze/           # Raw data files
+│   ├── silver/           # Normalized data files
+│   └── gold/             # Enriched data files
 ├── tests/               # Comprehensive test suite
-└── notebooks/           # Analysis notebooks
+│   ├── conftest.py
+│   ├── test_extract.py
+│   ├── test_enricher.py
+│   ├── test_logger.py
+│   ├── test_pipeline.py
+│   ├── test_ranker.py
+│   └── test_schemas.py
+├── scripts/             # Utility scripts
+│   ├── cleanup_stuck_tasks.py
+│   └── start_airflow.sh
+├── notebooks/           # Analysis notebooks
+├── .github/             # GitHub Actions CI/CD
+│   └── workflows/
+│       └── ci.yml
+├── Dockerfile           # Docker configuration
+├── docker-compose.yml   # Docker Compose setup
+├── pyproject.toml       # Poetry dependencies
+├── poetry.lock          # Locked dependencies
+├── pytest.ini          # Pytest configuration
+├── .pre-commit-config.yaml # Pre-commit hooks
+├── Makefile             # Development commands
+└── run_local_pipeline.py # Local pipeline runner
 ```
 
 ---
@@ -243,6 +270,7 @@ poetry run pytest --cov=src --cov-report=html
 # Run specific test categories
 poetry run pytest tests/test_extract.py
 poetry run pytest tests/test_enricher.py
+poetry run pytest tests/test_pipeline.py
 ```
 
 ---
