@@ -17,7 +17,7 @@ services:
       - ./dags:/opt/airflow/dags
       - ./data:/opt/airflow/data
       - ./src:/opt/airflow/src
-      - ./logs:/opt/airflow/logs
+      - airflow_logs:/opt/airflow/logs
       - ./scripts:/opt/airflow/scripts
     ports:
       - "8080:8080"
@@ -58,4 +58,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres_data: 
+  postgres_data:
+  airflow_logs: 
