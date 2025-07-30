@@ -82,14 +82,29 @@ jobs:
         docker compose up -d
         echo "Waiting for Airflow to start..."
         sleep 60
+        echo "Container status:"
+        docker compose ps
+        echo "Airflow logs:"
+        docker compose logs airflow --tail=20
         echo "Checking Airflow health..."
         for i in {1..10}; do
-          if curl -f http://localhost:8080/health > /dev/null 2>&1; then
+          if curl -f http://host.docker.internal:8080/health > /dev/null 2>&1; then
             echo "Airflow is healthy!"
             break
           fi
           echo "Attempt $i: Airflow not ready yet, waiting..."
           sleep 10
         done
-        curl -f http://localhost:8080/health || exit 1
+        echo "Final health check..."
+        # Try multiple approaches to check Airflow health
+        if curl -f http://host.docker.internal:8080/health > /dev/null 2>&1; then
+          echo "Airflow health check passed via host.docker.internal"
+        elif curl -f http://127.0.0.1:8080/health > /dev/null 2>&1; then
+          echo "Airflow health check passed via 127.0.0.1"
+        elif curl -f http://localhost:8080/health > /dev/null 2>&1; then
+          echo "Airflow health check passed via localhost"
+        else
+          echo "All health check attempts failed"
+          exit 1
+        fi
         docker compose down 
