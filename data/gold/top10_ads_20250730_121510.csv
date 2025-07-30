@@ -1,0 +1,11 @@
+ad_id,ad_text,active,media,country,duration_hours,media_type,language,enriched_at
+mock_37,This is a test ad #37 with great features and microlearning tricks,Active for 9 hrs 40 mins,"['image', 'video']",US,9.67,both,en,2025-07-30 12:15:07.581216
+mock_21,This is a test ad #21 with great features and microlearning tricks,Active for 9 hrs 10 mins,"['image', 'video']",US,9.17,both,en,2025-07-30 12:15:07.444788
+mock_12,This is a test ad #12 with great features and microlearning tricks,Active for 9 hrs 56 mins,['video'],US,9.93,video-only,en,2025-07-30 12:15:07.369125
+mock_45,This is a test ad #45 with great features and microlearning tricks,Active for 9 hrs 43 mins,['video'],US,9.72,video-only,en,2025-07-30 12:15:07.623566
+mock_24,This is a test ad #24 with great features and microlearning tricks,Active for 8 hrs 41 mins,"['image', 'video']",US,8.68,both,en,2025-07-30 12:15:07.477815
+mock_13,This is a test ad #13 with great features and microlearning tricks,Active for 8 hrs 13 mins,"['image', 'video']",US,8.22,both,en,2025-07-30 12:15:07.373969
+mock_22,This is a test ad #22 with great features and microlearning tricks,Active for 7 hrs 11 mins,"['image', 'video']",US,7.18,both,en,2025-07-30 12:15:07.456665
+mock_32,This is a test ad #32 with great features and microlearning tricks,Active for 8 hrs 35 mins,['image'],US,8.58,image-only,en,2025-07-30 12:15:07.548092
+mock_31,This is a test ad #31 with great features and microlearning tricks,Active for 6 hrs 55 mins,"['image', 'video']",US,6.92,both,en,2025-07-30 12:15:07.538928
+mock_34,This is a test ad #34 with great features and microlearning tricks,Active for 8 hrs 5 mins,['image'],US,8.08,image-only,en,2025-07-30 12:15:07.564873
