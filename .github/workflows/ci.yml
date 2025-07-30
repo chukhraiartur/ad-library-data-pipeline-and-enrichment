@@ -87,7 +87,7 @@ jobs:
         echo "Airflow logs:"
         docker compose logs airflow --tail=20
         echo "Running the pipeline..."
-        docker compose exec -T airflow python /opt/airflow/scripts/run_pipeline.py
+        docker compose exec -T airflow python /opt/airflow/run_local_pipeline.py
         echo "Pipeline completed. Checking results..."
         echo "Waiting for top 10 ads file to be generated..."
         for i in {1..10}; do
