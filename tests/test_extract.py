@@ -120,7 +120,8 @@ def test_fetch_ads_data_api_mode_no_token(mock_getenv) -> None:
 def test_fetch_ads_data_invalid_mode() -> None:
     """Test fetch_ads_data with invalid mode"""
     with pytest.raises(
-        RuntimeError, match="Data extraction failed: Expected code to be unreachable, but got: 'invalid_mode'"
+        RuntimeError,
+        match="Data extraction failed: Expected code to be unreachable, but got: 'invalid_mode'",
     ):
         fetch_ads_data(mode="invalid_mode")
 
